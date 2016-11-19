@@ -114,14 +114,15 @@ void handelUDPSeatchJob() {
 
   //  Reply to remote
   IPAddress remoteIP = udpSearch.remoteIP();
+  int remotePort = udpSearch.remotePort();
   Serial.print("UDPSearch: RemoteIP: ");
   Serial.print(remoteIP);
-  Serial.println(" Remote Port: " + String(udpSearch.remotePort()));
+  Serial.println(" Remote Port: " + String(remotePort));
 
   //Prepare reply data
-  String reply = "{\"Temperature\":\"" + String(lastTemperature) + "\",\"Humidity\": \"" + String(lastHumidity) + "\", \"SansorName\": \"" + String(MAC_char) + "\""; 
+  String reply = "{\"Temperature\":\"" + String(lastTemperature) + "\",\"Humidity\": \"" + String(lastHumidity) + "\", \"SansorName\": \"" + String(MAC_char) + "\"}"; 
   reply.toCharArray(udpBuffer, UDP_PACKET_SIZE);
-  udpSearch.beginPacket(remoteIP, udpSearch.remotePort());
+  udpSearch.beginPacket(remoteIP, remotePort);
   udpSearch.write(udpBuffer);
   udpSearch.endPacket();
 }
