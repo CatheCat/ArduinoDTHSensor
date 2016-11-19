@@ -49,6 +49,9 @@ void setup() {
   Serial.println(WiFi.gatewayIP());
   Serial.print("DNS:"); 
   Serial.println(WiFi.dnsIP());
+
+  // Prepare DHT Sensor
+  dht.begin();
 }
 
 void loop() {
