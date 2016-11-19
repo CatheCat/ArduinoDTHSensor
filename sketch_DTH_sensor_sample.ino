@@ -62,10 +62,25 @@ void loop() {
     previousShowDotMillis = nowMillis;
     Serial.print(".");  
   }
-
   // Check if should report to server
   if (previousShowDotMillis == 0 || (nowMillis-previousUpdateMillis > REPORT_TIME_INTERVAL)) {
     previousUpdateMillis = nowMillis;
     Serial.print("Start to report to server");  
+  }
+  // Sleep for a while
+  delay(10);
+}
+
+void readFromDHTServer() {
+  float newTemperature = dht.readTemperature();  
+  float newHumidity = dht.readHumidity();
+  if (isnan(newTemperature) || isnan(newHumidity)) {
+    Serial.println("Fail to read from DHT server.");
+    return ;
+  } else {
+    // OK to read Temperature and Humidity, will report to server
+    lastTemperature = newTemperature;
+    lastHumidity = newHumidity;
+    Serial.println("Temperature: " + String(lastTemperature) + "\tHumidity:" + String(lastHumidity));
   }
 }
