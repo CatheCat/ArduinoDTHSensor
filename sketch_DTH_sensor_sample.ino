@@ -23,8 +23,11 @@ String lastUpdateTime; // 最新一次的更新時間
 unsigned long previousShowDotMillis = 0;
 unsigned long previousUpdateMillis = 0;
 
-// UDP Search support
+// UDP Search Support
 WiFiUDP udpSearch;
+// UDP Data Buffer
+#define UDP_PACKET_SIZE UDP_TX_PACKET_MAX_SIZE
+char udpBuffer[UDP_PACKET_SIZE];
 
 void setup() {
   // put your setup code here, to run once:
@@ -97,11 +100,21 @@ void readFromDHTServer() {
 }
 
 void handelUDPSeatchJob() {
-  int packageSize = udpSearch.parsePacket();
-  if (packageSize == 0) {
+  int packetSize = udpSearch.parsePacket();
+  if (packetSize == 0) {
     // No incoming data, and return 
     return ;  
   }
   // Handle incoming data
-  Serial.println("\nUDPSearch Receive packet, length=" + String(packageSize));
+  Serial.println("\nUDPSearch Receive packet, length=" + String(packetSize));
+
+  udpSearch.read(udpBuffer, UDP_PACKET_SIZE);
+  udpBuffer[packetSize] = 0; // EOL
+  Serial.println("DUPSearch Receive Content: " + String(udpBuffer));
+
+  //  Reply to remote
+  IPAddress remoteIP = udpSearch.remoteIP();
+  Serial.print("UDPSearch: RemoteIP: ");
+  Serial.print(remoteIP);
+  Serial.println(" Remote Port: " + String(udpSearch.remotePort()));
 }
