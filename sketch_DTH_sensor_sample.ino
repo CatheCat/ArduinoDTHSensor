@@ -65,7 +65,8 @@ void loop() {
   // Check if should report to server
   if (previousShowDotMillis == 0 || (nowMillis-previousUpdateMillis > REPORT_TIME_INTERVAL)) {
     previousUpdateMillis = nowMillis;
-    Serial.print("Start to report to server");  
+    Serial.print("Start to report to server");
+    readFromDHTServer();
   }
   // Sleep for a while
   delay(10);
