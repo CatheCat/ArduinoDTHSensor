@@ -23,6 +23,9 @@ String lastUpdateTime; // 最新一次的更新時間
 unsigned long previousShowDotMillis = 0;
 unsigned long previousUpdateMillis = 0;
 
+// UDP Search support
+WiFiUDP udpSearch;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -52,6 +55,10 @@ void setup() {
 
   // Prepare DHT Sensor
   dht.begin();
+
+  // Prepare UDP search
+  udpSearch.begin(8181);
+  Serial.print("Start UDP Search support at port: " + String(udpSearch.localPort()));
 }
 
 void loop() {
