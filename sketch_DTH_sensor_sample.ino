@@ -23,6 +23,19 @@ void setup() {
     Serial.print(".");
   }
   Serial.print("\nWiFi AP Connectced.");
+
+  // Acquire important information
+  WiFi.macAddress(MAC_array);
+  for(int i=0; i < sizeof(MAC_array); i++) {
+    sprintf(MAC_char, "%s%02x", MAC_char, MAC_array[i]);  
+  }
+  Serial.println("WiFi Mac Address:" + String(MAC_char));
+  Serial.print("IP Address:"); 
+  Serial.println(WiFi.localIP());
+  Serial.print("Gateway:"); 
+  Serial.println(WiFi.gatewayIP());
+  Serial.print("DNS:"); 
+  Serial.println(WiFi.dnsIP());
 }
 
 void loop() {
