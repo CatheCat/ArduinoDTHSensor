@@ -117,4 +117,11 @@ void handelUDPSeatchJob() {
   Serial.print("UDPSearch: RemoteIP: ");
   Serial.print(remoteIP);
   Serial.println(" Remote Port: " + String(udpSearch.remotePort()));
+
+  //Prepare reply data
+  String reply = "{\"Temperature\":\"" + String(lastTemperature) + "\",\"Humidity\": \"" + String(lastHumidity) + "\", \"SansorName\": \"" + String(MAC_char) + "\""; 
+  reply.toCharArray(udpBuffer, UDP_PACKET_SIZE);
+  udpSearch.beginPacket(remoteIP, udpSearch.remotePort());
+  udpSearch.write(udpBuffer);
+  udpSearch.endPacket();
 }
