@@ -6,13 +6,23 @@
 
 // 變數宣告
 char ssid[] = "AP NAME";     //  Wifi AP SSID (name)
-char pass[] = "PASSWORD";       //  Wifi AP password
+char password[] = "PASSWORD";       //  Wifi AP password
 uint8_t MAC_array[6];
 char MAC_char[18];
 
-svoid setup() {
+void setup() {
   // put your setup code here, to run once:
+  Serial.begin(115200);
 
+  // Prepare WiFi connection
+  Serial.print("Trying to connect to " + String(ssid));
+  WiFi.begin(ssid, password);
+
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.print("\nWiFi AP Connectced.");
 }
 
 void loop() {
