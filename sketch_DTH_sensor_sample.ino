@@ -18,8 +18,8 @@ float lastTemperature; // 脧新一次的溫度
 float lastHumidity; // 最新一次的濕度
 String lastUpdateTime; // 最新一次的更新時間
 
-#define SHOWDOC_TIME_INTERVAL = 1000; // 間隔1秒顯示一個點
-#define REPORT_TIME_INTERVAL = 30000; // 間隔30秒回報一次
+#define SHOWDOC_TIME_INTERVAL 1000 // 間隔1秒顯示一個點
+#define REPORT_TIME_INTERVAL 30000 // 間隔30秒回報一次
 unsigned long previousShowDotMillis = 0;
 unsigned long previousUpdateMillis = 0;
 
@@ -53,5 +53,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  unsigned long nowMillis = millis();
+  // Check if should show dot
+  if (previousShowDotMillis == 0 || (nowMillis-previousShowDotMillis > SHOWDOC_TIME_INTERVAL)) {
+    previousShowDotMillis = nowMillis;
+    Serial.print(".");  
+  }
 
+  // Check if should report to server
+  if (previousShowDotMillis == 0 || (nowMillis-previousUpdateMillis > REPORT_TIME_INTERVAL)) {
+    previousUpdateMillis = nowMillis;
+    Serial.print("Start to report to server");  
+  }
 }
