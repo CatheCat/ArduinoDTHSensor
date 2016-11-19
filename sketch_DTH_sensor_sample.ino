@@ -75,6 +75,9 @@ void loop() {
     Serial.print("Start to report to server");
     readFromDHTServer();
   }
+
+  handelUDPSeatchJob();
+  
   // Sleep for a while
   delay(10);
 }
@@ -91,4 +94,14 @@ void readFromDHTServer() {
     lastHumidity = newHumidity;
     Serial.println("Temperature: " + String(lastTemperature) + "\tHumidity:" + String(lastHumidity));
   }
+}
+
+void handelUDPSeatchJob() {
+  int packageSize = udpSearch.parsePacket();
+  if (packageSize == 0) {
+    // No incoming data, and return 
+    return ;  
+  }
+  // Handle incoming data
+  Serial.println("\nUDPSearch Receive packet, length=" + String(packageSize));
 }
