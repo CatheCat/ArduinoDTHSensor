@@ -4,7 +4,13 @@
 #include <WiFiClient.h>
 #include "DHT.h"
 
-void setup() {
+// 變數宣告
+char ssid[] = "AP NAME";     //  Wifi AP SSID (name)
+char pass[] = "PASSWORD";       //  Wifi AP password
+uint8_t MAC_array[6];
+char MAC_char[18];
+
+svoid setup() {
   // put your setup code here, to run once:
 
 }
