@@ -10,6 +10,19 @@ char password[] = "PASSWORD";       //  Wifi AP password
 uint8_t MAC_array[6];
 char MAC_char[18];
 
+// DHT Sensor Support
+#define DHTPIN 14
+#define DHTTYPE DHT11
+DHT dht(DHTPIN,DHTTYPE); // 定義 dnt 物件
+float lastTemperature; // 脧新一次的溫度
+float lastHumidity; // 最新一次的濕度
+String lastUpdateTime; // 最新一次的更新時間
+
+#define SHOWDOC_TIME_INTERVAL = 1000; // 間隔1秒顯示一個點
+#define REPORT_TIME_INTERVAL = 30000; // 間隔30秒回報一次
+unsigned long previousShowDotMillis = 0;
+unsigned long previousUpdateMillis = 0;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
